@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uganda ERP Dashboard — ERP Decision Guide</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #1a1f36;
+        }
+
+        .page {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .top-nav a {
+            color: #27AE60;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .top-nav a.button {
+            border: 1px solid #27AE60;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: white;
+        }
+
+        .brand {
+            font-weight: 800;
+            color: #27AE60;
+            font-size: 1.05rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .report-card {
+            background: #f0fdf4;
+            border: 1px solid #d9f4d4;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+            margin-top: 18px;
+        }
+
+        .report-grid div {
+            background: white;
+            padding: 18px;
+            border-radius: 18px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07);
+        }
+
+        .report-grid h4 {
+            margin: 0 0 8px;
+            font-size: 0.95rem;
+            color: #8B3A3A;
+        }
+
+        .report-grid p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .report-summary {
+            margin-top: 20px;
+            color: #334155;
+            line-height: 1.8;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            margin: 0 0 12px;
+            color: #8B3A3A;
+        }
+
+        .hero p {
+            margin: 0;
+            color: #475569;
+            line-height: 1.8;
+            max-width: 760px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .stat-box {
+            background: #eff6ff;
+            border-radius: 20px;
+            padding: 22px;
+        }
+
+        .stat-box h3 {
+            margin: 0 0 10px;
+            font-size: 0.95rem;
+            color: #1d4ed8;
+        }
+
+        .stat-box p {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        .table th,
+        .table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .table th {
+            background: #f8fafc;
+            color: #334155;
+            font-weight: 700;
+        }
+
+        .table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .pill {
+            display: inline-flex;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #e0f2fe;
+            color: #0c4a6e;
+            font-size: 0.86rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 960px) {
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="top-nav">
+        <div class="brand">Uganda ERP Advisor</div>
+        <div class="nav-links">
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'history' %}">History</a>
+            <a href="{% url 'user_logout' %}" class="button">Logout</a>
+        </div>
+    </div>
+
+    <div class="card hero">
+        <h1>Uganda ERP Dashboard</h1>
+        <p>Welcome back, {{ request.user.get_username }}. This dashboard shows local recommendation trends, compliance readiness, and the business pulse across your Uganda dataset.</p>
+    </div>
+
+    <div class="report-card">
+        <h2>Uganda Business Pulse</h2>
+        <div class="report-grid">
+            <div>
+                <h4>Most common sector</h4>
+                <p>{{ report.top_industry_label }}</p>
+            </div>
+            <div>
+                <h4>Compliance focus</h4>
+                <p>{{ report.top_compliance_label }}</p>
+            </div>
+            <div>
+                <h4>Top recommendation</h4>
+                <p>{{ report.top_recommendation }}</p>
+            </div>
+        </div>
+        <p class="report-summary">{{ report.local_message }}</p>
+    </div>
+
+    <div class="stats">
+        <div class="stat-box">
+            <h3>Total submissions</h3>
+            <p>{{ totals.total }}</p>
+        </div>
+        <div class="stat-box">
+            <h3>Odoo recommendations</h3>
+            <p>{{ totals.odoo }}</p>
+        </div>
+        <div class="stat-box">
+            <h3>QuickBooks recommendations</h3>
+            <p>{{ totals.quickbooks }}</p>
+        </div>
+        <div class="stat-box">
+            <h3>Hybrid recommendations</h3>
+            <p>{{ totals.hybrid }}</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Recent submissions</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Saved at</th>
+                    <th>Company</th>
+                    <th>Recommendation</th>
+                    <th>Industry</th>
+                    <th>Priority</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in recent %}
+                <tr>
+                    <td>{{ item.created_at|date:'SHORT_DATETIME_FORMAT' }}</td>
+                    <td>{{ item.company_name|default:'–' }}</td>
+                    <td>{{ item.recommendation }}</td>
+                    <td>{{ item.get_industry_display }}</td>
+                    <td>{{ item.get_priority_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

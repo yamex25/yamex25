@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uganda ERP Decision Guide</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #1a1f36;
+        }
+
+        .page {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 36px 24px 60px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .hero {
+            flex: 1 1 480px;
+            min-width: 320px;
+        }
+
+        .hero h1 {
+            margin: 0 0 16px;
+            font-size: 2.6rem;
+            line-height: 1.05;
+            color: #8B3A3A;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #475569;
+            max-width: 680px;
+        }
+
+        .metrics {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            color: #27AE60;
+            font-size: 1.1rem;
+        }
+
+        .brand img {
+            height: 32px;
+            width: auto;
+            display: inline-block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #27AE60;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-links a.button {
+            border: 1px solid #27AE60;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: white;
+        }
+
+        .metric {
+            flex: 1 1 180px;
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        .metric h3 {
+            margin: 0 0 10px;
+            font-size: 0.95rem;
+            color: #8B3A3A;
+        }
+
+        .metric p {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #0f172a;
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+        }
+
+        .question-card {
+            border: 1px solid #e2e8f0;
+        }
+
+        .question-card h3 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+            color: #8B3A3A;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .option-button {
+            min-width: 140px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            color: #0f172a;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.96rem;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            text-align: left;
+        }
+
+        .option-button:hover {
+            border-color: #27AE60;
+            background: #f0fdf4;
+        }
+
+        .option-button.selected {
+            background: #27AE60;
+            color: white;
+            border-color: #27AE60;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .primary-button,
+        .secondary-button {
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 14px 20px;
+        }
+
+        .primary-button {
+            background: #27AE60;
+            color: white;
+            box-shadow: 0 14px 30px rgba(39, 174, 96, 0.28);
+        }
+
+        .secondary-button {
+            background: white;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+        }
+
+        .result-card {
+            margin-top: 28px;
+            padding: 28px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #f0fdf4 50%, #fffbf0 100%);
+            border: 1px solid #d1f4d1;
+        }
+
+        .result-card h2 {
+            margin-top: 0;
+            font-size: 1.75rem;
+        }
+
+        .result-card p {
+            margin: 10px 0;
+            line-height: 1.8;
+            color: #334155;
+        }
+
+        .tag {
+            display: inline-flex;
+            background: #d9f4d4;
+            border-radius: 999px;
+            color: #27AE60;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .company-input {
+            margin-top: 22px;
+        }
+
+        .company-input label {
+            display: block;
+            margin-bottom: 8px;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+
+        .company-input input {
+            width: 100%;
+            max-width: 420px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            border: 1px solid #cbd5e1;
+            font-size: 1rem;
+            color: #0f172a;
+            background: #ffffff;
+        }
+
+        .hero-badges {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: #d9f4d4;
+            color: #27AE60;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .pricing-section,
+        .testimonial-section {
+            margin-top: 32px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .pricing-card,
+        .testimonial-card,
+        .logo-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        .pricing-card h4,
+        .testimonial-card h4,
+        .logo-card h4 {
+            margin: 0 0 12px;
+            color: #8B3A3A;
+            font-size: 1rem;
+        }
+
+        .pricing-card p,
+        .testimonial-card p {
+            color: #475569;
+            line-height: 1.75;
+        }
+
+        .pricing-card ul {
+            padding-left: 18px;
+            margin: 12px 0 0;
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .logo-pill {
+            border: 1px solid #cbd5e1;
+            border-radius: 18px;
+            padding: 14px 16px;
+            color: #0f172a;
+            font-weight: 700;
+            background: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-pill a {
+            text-decoration: none;
+            color: #0f172a;
+        }
+
+        .logo-pill a:hover {
+            color: #27AE60;
+        }
+
+        .logo-pill.featured {
+            background: #27AE60;
+            color: white;
+            border: 1px solid #27AE60;
+        }
+
+        .logo-pill.featured a {
+            color: white;
+        }
+
+        .print-button {
+            display: none;
+            background: #27AE60;
+            color: white;
+            border-radius: 14px;
+            border: none;
+            padding: 14px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableReport,
+            #printableReport * {
+                visibility: visible;
+            }
+            #printableReport {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .footer strong {
+            color: #27AE60;
+        }
+
+        .recent-list {
+            margin-top: 24px;
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        .recent-list li {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .question-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="top-nav">
+        <div class="brand">
+            <img src="https://www.rbmafrica.com/logo.png" alt="RBM Enterprise Solutions" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHJ4PSI4IiBmaWxsPSIjMWQ0ZWQ4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkkJRFA6MTwvdGV4dD48L3N2Zz4='">
+            RBM ERP Advisor
+        </div>
+        <div class="nav-links">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'history' %}">History</a>
+                <a href="{% url 'user_logout' %}" class="button">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="button">Login</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="header">
+        <div class="hero">
+            <h1>Professional ERP Decision Guide</h1>
+            <p>Answer a polished enterprise-ready questionnaire tailored for Ugandan SMEs and growing enterprises, then receive a locally-relevant recommendation.</p>
+            <div class="company-input">
+                <label for="companyName">Company name (optional)</label>
+                <input id="companyName" type="text" placeholder="e.g. Kampala Logistics Ltd" oninput="updateCompanyName(this)">
+            </div>
+            <div class="metrics">
+                <div class="metric">
+                    <h3>Professional scoring</h3>
+                    <p>Built for real business decision criteria.</p>
+                </div>
+                <div class="metric">
+                    <h3>Uganda-ready</h3>
+                    <p>Local compliance and industry insight.</p>
+                </div>
+                <div class="metric">
+                    <h3>Actionable guidance</h3>
+                    <p>Deploy the right financial and operational path.</p>
+                </div>
+            </div>
+            <div class="hero-badges">
+                <span class="pill">Local URA readiness</span>
+                <span class="pill">SME and enterprise</span>
+                <span class="pill">Finance + operations</span>
+            </div>
+
+            <div class="pricing-section">
+                <div class="pricing-card">
+                    <h4>Launch package</h4>
+                    <p>For new or small businesses seeking a fast finance-first ERP introduction.</p>
+                    <ul>
+                        <li>QuickBooks financial setup</li>
+                        <li>Basic reporting and invoicing</li>
+                        <li>UGX-friendly implementation guidance</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h4>Growth package</h4>
+                    <p>For established SMEs that need finance, inventory, and compliance alignment.</p>
+                    <ul>
+                        <li>Odoo Accounting and Inventory</li>
+                        <li>Sales, Purchase, and Workflow design</li>
+                        <li>Local compliance and VAT readiness</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h4>Transformation package</h4>
+                    <p>For growing enterprises requiring multi-entity, payroll, and operational automation.</p>
+                    <ul>
+                        <li>ERP framework with operations</li>
+                        <li>Payroll & HR planning</li>
+                        <li>Future-proof scaling strategy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="testimonial-section">
+                <div class="testimonial-card">
+                    <h4>What clients say</h4>
+                    <p>“This guide helped us choose the right ERP path for our retail business in Kampala. The recommendation matched our finance and operations needs exactly.”</p>
+                    <p><strong>— Grace N., Nile Trading Company</strong></p>
+                </div>
+                <div class="logo-card">
+                    <h4>Trusted by local teams</h4>
+                    <div class="logo-grid">
+                        <span class="logo-pill"><a href="https://www.rbmafrica.com/" target="_blank" title="RBM Enterprise Solutions - Odoo & ERP Expert">RBM Enterprise Solutions</a></span>
+                        <span class="logo-pill">Kampala Logistics</span>
+                        <span class="logo-pill">Nile Traders</span>
+                        <span class="logo-pill">Mbarara Farms</span>
+                        <span class="logo-pill">Jinja Hospitality</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <h4>Implementation success</h4>
+                    <p>“The recommended rollout plan gave us confidence in the ERP choice and helped us stay compliant with Uganda revenue requirements.”</p>
+                    <p><strong>— John K., Uganda Agro Exports</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="question-grid">
+            <div class="question-card">
+                <h3>1. Business priority</h3>
+                <div class="button-row">
+                    <button class="option-button" data-key="priority" data-value="accounting" onclick="setAnswer(this)">Financial control and reporting</button>
+                    <button class="option-button" data-key="priority" data-value="mixed" onclick="setAnswer(this)">Finance + operations oversight</button>
+                    <button class="option-button" data-key="priority" data-value="operations" onclick="setAnswer(this)">End-to-end operations and growth</button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3>2. Process complexity</h3>
+                <div class="button-row">
+                    <button class="option-button" data-key="complexity" data-value="low" onclick="setAnswer(this)">Standard accounting workflows</button>
+                    <button class="option-button" data-key="complexity" data-value="medium" onclick="setAnswer(this)">Integrated finance and operations</button>
+                    <button class="option-button" data-key="complexity" data-value="high" onclick="setAnswer(this)">Complex cross-functional processes</button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3>3. Growth trajectory</h3>
+                <div class="button-row">
+                    <button class="option-button" data-key="growth" data-value="stable" onclick="setAnswer(this)">Stable with predictable demand</button>
+                    <button class="option-button" data-key="growth" data-value="growing" onclick="setAnswer(this)">Steady expansion</button>
+                    <button class="option-button" data-key="growth" data-value="scaling" onclick="setAnswer(this)">Rapid scaling and new markets</button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3>4. Integration requirement</h3>
+                <div class="button-row">
+                    <button class="option-button" data-key="integration" data-value="low" onclick="setAnswer(this)">Accounting only</button>
+                    <button class="option-button" data-key="integration" data-value="medium" onclick="setAnswer(this)">Finance plus sales or inventory</button>
+                    <button class="option-button" data-key="integration" data-value="high" onclick="setAnswer(this)">Multi-team operational workflows</button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3>5. Industry sector</h3>
+                <div class="button-row">
+                    <button class="option-button" data-key="industry" data-value="services" onclick="setAnswer(this)">Professional services</button>
+                    <button class="option-button" data-key="industry" data-value="trade" onclick="setAnswer(this)">Retail / trade</button>
+                    <button class="option-button" data-key="industry" data-value="manufacturing" onclick="setAnswer(this)">Manufacturing</button>
+                    <button class="option-button" data-key="industry" data-value="agriculture" onclick="setAnswer(this)">Agriculture / agro-trade</button>
+                    <button class="option-button" data-key="industry" data-value="hospitality" onclick="setAnswer(this)">Hospitality / tourism</button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3>6. Business size</h3>
+                <div class="button-row">
+                    <button class="option-button" data-key="business_size" data-value="small" onclick="setAnswer(this)">Small / emerging entity</button>
+                    <button class="option-button" data-key="business_size" data-value="medium" onclick="setAnswer(this)">Mid-market organisation</button>
+                    <button class="option-button" data-key="business_size" data-value="large" onclick="setAnswer(this)">Large / complex enterprise</button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3>7. Budget & timeline</h3>
+                <div class="button-row">
+                    <button class="option-button" data-key="budget" data-value="rapid" onclick="setAnswer(this)">Fast launch with tight budget</button>
+                    <button class="option-button" data-key="budget" data-value="balanced" onclick="setAnswer(this)">Balanced cost and delivery</button>
+                    <button class="option-button" data-key="budget" data-value="strategic" onclick="setAnswer(this)">Strategic transformation investment</button>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h3>8. Compliance scope</h3>
+                <div class="button-row">
+                    <button class="option-button" data-key="compliance" data-value="standard" onclick="setAnswer(this)">Single-country compliance</button>
+                    <button class="option-button" data-key="compliance" data-value="regional" onclick="setAnswer(this)">Regional or multi-office</button>
+                    <button class="option-button" data-key="compliance" data-value="global" onclick="setAnswer(this)">Global / multi-entity</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="primary-button" type="button" onclick="submitAnswers()">Generate Recommendation</button>
+            <button class="print-button" id="printButton" type="button" onclick="printReport()">Print Recommendation</button>
+            <a class="secondary-button" id="reportLink" href="#" target="_blank" style="display:none;">Open printable report</a>
+            <a class="secondary-button" href="{% url 'history' %}">View saved recommendations</a>
+        </div>
+
+        <p id="downloadHint" style="margin-top:12px; color:#475569; font-size:0.95rem;">Generate a recommendation first, then use Print Recommendation or open the printable report link.</p>
+        <div id="message"></div>
+        <div id="printableReport" style="display:none;"></div>
+        <div id="result"></div>
+    </div>
+
+    {% if recent %}
+    <div class="card">
+        <h3>Recent recommendations</h3>
+        <ul class="recent-list">
+            {% for item in recent %}
+                <li><strong>{{ item.recommendation }}</strong> — {{ item.created_at|date:'SHORT_DATETIME_FORMAT' }} ({{ item.get_business_size_display }}, {{ item.get_budget_display }}, {{ item.get_compliance_display }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}    <div class="footer">
+        <p><strong>Uganda ERP Advisor</strong> is designed for local businesses seeking practical ERP guidance, compliance readiness, and reliable deployment strategy.</p>
+    </div></div>
+
+<script>
+let answers = {};
+
+function setAnswer(button) {
+    const key = button.dataset.key;
+    const value = button.dataset.value;
+    answers[key] = value;
+
+    document.querySelectorAll(`button[data-key="${key}"]`).forEach(el => {
+        el.classList.toggle('selected', el === button);
+    });
+    document.getElementById('message').textContent = '';
+}
+
+function showMessage(text) {
+    document.getElementById('message').textContent = text;
+}
+
+function updateCompanyName(input) {
+    answers['company_name'] = input.value.trim();
+}
+
+function submitAnswers() {
+    const required = ['priority', 'complexity', 'growth', 'integration', 'industry', 'business_size', 'budget', 'compliance'];
+    const missing = required.filter(field => !answers[field]);
+    if (missing.length) {
+        showMessage('Please answer all questions before submitting.');
+        return;
+    }
+
+    fetch('{% url "evaluate" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: JSON.stringify(answers),
+    })
+        .then(async res => {
+            const data = await res.json();
+            if (!res.ok) {
+                showMessage(data.error || 'Unable to submit answers.');
+                return;
+            }
+            document.getElementById('result').innerHTML = `
+                <div class="result-card">
+                    <div class="tag">Recommended System</div>
+                    <h2>${data.system}</h2>
+                    <p><strong>Strategic rationale:</strong> ${data.explanation}</p>
+                    ${data.focus ? `<p><strong>Focus:</strong> ${data.focus}</p>` : ''}
+                    ${data.modules ? `<p><strong>Recommended modules:</strong> ${data.modules}</p>` : ''}
+                    <p><strong>Primary risk:</strong> ${data.risks}</p>
+                    <p><strong>Recommended approach:</strong> ${data.approach}</p>
+                </div>
+            `;
+            document.getElementById('printButton').style.display = 'inline-flex';
+            const reportLink = document.getElementById('reportLink');
+            reportLink.href = `/report/${data.decision_id}/`;
+            reportLink.style.display = 'inline-flex';
+            showMessage('Recommendation saved successfully.');
+        })
+        .catch(() => {
+            showMessage('Unable to connect to the server.');
+        });
+}
+
+function printReport() {
+    const printArea = document.getElementById('result').innerHTML;
+    const printable = document.getElementById('printableReport');
+    printable.innerHTML = `
+        <div style="font-family: Inter, system-ui, sans-serif; padding: 24px;">
+            <h1 style="color:#003D82;">Uganda ERP Recommendation Report</h1>
+            <p style="color:#475569; font-size:1rem; line-height:1.8;">This report contains the recommendation and implementation guidance for the selected business profile.</p>
+            ${printArea}
+        </div>
+    `;
+    window.print();
+}
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return '';
+}
+</script>
+
+</body>
+</html>

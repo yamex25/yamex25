@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendation History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+            color: #1f2937;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .top-nav a {
+            color: #27AE60;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .top-nav a.button {
+            border: 1px solid #27AE60;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: white;
+        }
+
+        a {
+            color: #27AE60;
+            text-decoration: none;
+        }
+
+        h1 {
+            color: #8B3A3A;
+        }
+    </style>
+</head>
+<body>
+<div class="top-nav">
+    <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+    <a href="{% url 'user_logout' %}" class="button">Logout</a>
+</div>
+
+<h1>Saved Recommendations</h1>
+<form method="get" class="search-form" style="margin-bottom:24px; display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end;">
+    <div style="display:flex; flex-direction:column;">
+        <label for="company" style="font-weight:600; margin-bottom:6px; color:#1f2937;">Company</label>
+        <input id="company" name="company" type="text" value="{{ company_query }}" style="padding:10px 12px; border:1px solid #cbd5e1; border-radius:10px; width:240px;" placeholder="Search by company">
+    </div>
+    <div style="display:flex; flex-direction:column;">
+        <label for="recommendation" style="font-weight:600; margin-bottom:6px; color:#1f2937;">Recommendation</label>
+        <input id="recommendation" name="recommendation" type="text" value="{{ recommendation_query }}" style="padding:10px 12px; border:1px solid #cbd5e1; border-radius:10px; width:240px;" placeholder="Search by recommendation">
+    </div>
+    <button type="submit" style="background:#27AE60; color:white; padding:12px 20px; border:none; border-radius:12px; cursor:pointer;">Search</button>
+    <a href="{% url 'history' %}" style="background:white; color:#6b7280; padding:12px 20px; border:1px solid #d1d5db; border-radius:12px; text-decoration:none;">Clear</a>
+</form>
+<div class="card">
+    <p><a href="{% url 'index' %}">← Back to decision guide</a></p>
+    {% if decisions %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Saved At</th>
+                    <th>Company</th>
+                    <th>Recommendation</th>
+                    <th>Report</th>
+                    <th>Industry</th>
+                    <th>Priority</th>
+                    <th>Complexity</th>
+                    <th>Growth</th>
+                    <th>Integration</th>
+                    <th>Business Size</th>
+                    <th>Budget Profile</th>
+                    <th>Compliance Scope</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for decision in decisions %}
+                <tr>
+                    <td>{{ decision.created_at|date:'SHORT_DATETIME_FORMAT' }}</td>
+                    <td>{{ decision.company_name|default:'Company' }}</td>
+                    <td>{{ decision.recommendation }}</td>
+                    <td><a href="{% url 'printable_report' decision.id %}" target="_blank">View report</a></td>
+                    <td>{{ decision.get_industry_display }}</td>
+                    <td>{{ decision.get_priority_display }}</td>
+                    <td>{{ decision.get_complexity_display }}</td>
+                    <td>{{ decision.get_growth_display }}</td>
+                    <td>{{ decision.get_integration_display }}</td>
+                    <td>{{ decision.get_business_size_display }}</td>
+                    <td>{{ decision.get_budget_display }}</td>
+                    <td>{{ decision.get_compliance_display }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No recommendations have been saved yet.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

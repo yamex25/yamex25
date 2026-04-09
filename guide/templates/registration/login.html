@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login — ERP Decision Guide</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #1a1f36;
+        }
+        .page {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .card {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+        }
+        h1 {
+            margin: 0 0 14px;
+            font-size: 2rem;
+            color: #8B3A3A;
+        }
+        p {
+            margin: 0 0 24px;
+            line-height: 1.7;
+            color: #475569;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #334155;
+        }
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 16px;
+            margin-bottom: 18px;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 16px;
+            background: #27AE60;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .message {
+            margin-bottom: 16px;
+            color: #b91c1c;
+            font-size: 0.95rem;
+        }
+        .small {
+            margin-top: 20px;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+        .small a {
+            color: #27AE60;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="card">
+        <h1>Login</h1>
+        <p>Access the ERP decision dashboard and saved recommendation history.</p>
+        {% if form.errors %}
+            <div class="message">Your username and password didn't match. Please try again.</div>
+        {% endif %}
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <label for="id_username">Username</label>
+            {{ form.username }}
+            <label for="id_password">Password</label>
+            {{ form.password }}
+            <button type="submit">Login</button>
+        </form>
+        <p class="small"><a href="{% url 'index' %}">← Back to home</a></p>
+    </div>
+</div>
+</body>
+</html>
