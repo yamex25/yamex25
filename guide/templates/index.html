@@ -407,9 +407,11 @@
         <div class="nav-links">
             {% if request.user.is_authenticated %}
                 <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'profile' %}">Profile</a>
                 <a href="{% url 'history' %}">History</a>
                 <a href="{% url 'user_logout' %}" class="button">Logout</a>
             {% else %}
+                <a href="{% url 'signup' %}" class="button">Sign Up</a>
                 <a href="{% url 'login' %}" class="button">Login</a>
             {% endif %}
         </div>
@@ -420,7 +422,7 @@
             <p>Answer a polished enterprise-ready questionnaire tailored for Ugandan SMEs and growing enterprises, then receive a locally-relevant recommendation.</p>
             <div class="company-input">
                 <label for="companyName">Company name (optional)</label>
-                <input id="companyName" type="text" placeholder="e.g. Kampala Logistics Ltd" oninput="updateCompanyName(this)">
+                <input id="companyName" type="text" placeholder="e.g. Kampala Logistics Ltd" value="{{ company_name }}" oninput="updateCompanyName(this)">
             </div>
             <div class="metrics">
                 <div class="metric">
@@ -497,81 +499,22 @@
         </div>
     </div>
 
+    {% if request.user.is_authenticated %}
     <div class="card">
         <div class="question-grid">
+            {% for question in questions %}
             <div class="question-card">
-                <h3>1. Business priority</h3>
+                <h3>{{ question.text }}</h3>
                 <div class="button-row">
-                    <button class="option-button" data-key="priority" data-value="accounting" onclick="setAnswer(this)">Financial control and reporting</button>
-                    <button class="option-button" data-key="priority" data-value="mixed" onclick="setAnswer(this)">Finance + operations oversight</button>
-                    <button class="option-button" data-key="priority" data-value="operations" onclick="setAnswer(this)">End-to-end operations and growth</button>
+                    {% for key, label in question.options.items %}
+                    <button class="option-button" 
+                            data-key="{{ question.field_key }}" 
+                            data-value="{{ key }}" 
+                            onclick="setAnswer(this)">{{ label }}</button>
+                    {% endfor %}
                 </div>
             </div>
-
-            <div class="question-card">
-                <h3>2. Process complexity</h3>
-                <div class="button-row">
-                    <button class="option-button" data-key="complexity" data-value="low" onclick="setAnswer(this)">Standard accounting workflows</button>
-                    <button class="option-button" data-key="complexity" data-value="medium" onclick="setAnswer(this)">Integrated finance and operations</button>
-                    <button class="option-button" data-key="complexity" data-value="high" onclick="setAnswer(this)">Complex cross-functional processes</button>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <h3>3. Growth trajectory</h3>
-                <div class="button-row">
-                    <button class="option-button" data-key="growth" data-value="stable" onclick="setAnswer(this)">Stable with predictable demand</button>
-                    <button class="option-button" data-key="growth" data-value="growing" onclick="setAnswer(this)">Steady expansion</button>
-                    <button class="option-button" data-key="growth" data-value="scaling" onclick="setAnswer(this)">Rapid scaling and new markets</button>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <h3>4. Integration requirement</h3>
-                <div class="button-row">
-                    <button class="option-button" data-key="integration" data-value="low" onclick="setAnswer(this)">Accounting only</button>
-                    <button class="option-button" data-key="integration" data-value="medium" onclick="setAnswer(this)">Finance plus sales or inventory</button>
-                    <button class="option-button" data-key="integration" data-value="high" onclick="setAnswer(this)">Multi-team operational workflows</button>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <h3>5. Industry sector</h3>
-                <div class="button-row">
-                    <button class="option-button" data-key="industry" data-value="services" onclick="setAnswer(this)">Professional services</button>
-                    <button class="option-button" data-key="industry" data-value="trade" onclick="setAnswer(this)">Retail / trade</button>
-                    <button class="option-button" data-key="industry" data-value="manufacturing" onclick="setAnswer(this)">Manufacturing</button>
-                    <button class="option-button" data-key="industry" data-value="agriculture" onclick="setAnswer(this)">Agriculture / agro-trade</button>
-                    <button class="option-button" data-key="industry" data-value="hospitality" onclick="setAnswer(this)">Hospitality / tourism</button>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <h3>6. Business size</h3>
-                <div class="button-row">
-                    <button class="option-button" data-key="business_size" data-value="small" onclick="setAnswer(this)">Small / emerging entity</button>
-                    <button class="option-button" data-key="business_size" data-value="medium" onclick="setAnswer(this)">Mid-market organisation</button>
-                    <button class="option-button" data-key="business_size" data-value="large" onclick="setAnswer(this)">Large / complex enterprise</button>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <h3>7. Budget & timeline</h3>
-                <div class="button-row">
-                    <button class="option-button" data-key="budget" data-value="rapid" onclick="setAnswer(this)">Fast launch with tight budget</button>
-                    <button class="option-button" data-key="budget" data-value="balanced" onclick="setAnswer(this)">Balanced cost and delivery</button>
-                    <button class="option-button" data-key="budget" data-value="strategic" onclick="setAnswer(this)">Strategic transformation investment</button>
-                </div>
-            </div>
-
-            <div class="question-card">
-                <h3>8. Compliance scope</h3>
-                <div class="button-row">
-                    <button class="option-button" data-key="compliance" data-value="standard" onclick="setAnswer(this)">Single-country compliance</button>
-                    <button class="option-button" data-key="compliance" data-value="regional" onclick="setAnswer(this)">Regional or multi-office</button>
-                    <button class="option-button" data-key="compliance" data-value="global" onclick="setAnswer(this)">Global / multi-entity</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
         <div class="actions">
@@ -596,6 +539,47 @@
             {% endfor %}
         </ul>
     </div>
+    {% endif %}
+    {% else %}
+    <div class="card">
+        <div class="question-grid">
+            {% for question in questions %}
+            <div class="question-card">
+                <h3>{{ question.text }}</h3>
+                <div class="button-row">
+                    {% for key, label in question.options.items %}
+                    <button class="option-button" 
+                            data-key="{{ question.field_key }}" 
+                            data-value="{{ key }}" 
+                            onclick="setAnswer(this)">{{ label }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="actions">
+            <button class="primary-button" type="button" onclick="submitAnswers()">Generate Recommendation</button>
+            <button class="print-button" id="printButton" type="button" onclick="printReport()">Print Recommendation</button>
+            <a class="secondary-button" id="reportLink" href="#" target="_blank" style="display:none;">Open printable report</a>
+            <a class="secondary-button" href="{% url 'signup' %}">Sign up to save recommendations</a>
+        </div>
+
+        <p id="downloadHint" style="margin-top:12px; color:#475569; font-size:0.95rem;">Generate a recommendation first, then use Print Recommendation or open the printable report link.</p>
+        <div id="message"></div>
+        <div id="printableReport" style="display:none;"></div>
+        <div id="result"></div>
+    </div>
+
+    <div class="card">
+        <h3>Why Create an Account?</h3>
+        <p>Sign up to save your recommendations, track your decision history, and get personalized insights for your business.</p>
+        <p>Our decision guide provides tailored recommendations for Ugandan businesses, including compliance insights and implementation strategies.</p>
+        <div style="margin-top: 16px;">
+            <a href="{% url 'signup' %}" style="background: #27AE60; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; margin-right: 12px;">Create Account</a>
+            <a href="{% url 'login' %}" style="background: white; color: #27AE60; padding: 12px 20px; border-radius: 8px; text-decoration: none; border: 1px solid #27AE60;">Login</a>
+        </div>
+    </div>
     {% endif %}    <div class="footer">
         <p><strong>Uganda ERP Advisor</strong> is designed for local businesses seeking practical ERP guidance, compliance readiness, and reliable deployment strategy.</p>
     </div></div>
@@ -608,7 +592,9 @@ function setAnswer(button) {
     const value = button.dataset.value;
     answers[key] = value;
 
-    document.querySelectorAll(`button[data-key="${key}"]`).forEach(el => {
+    // Toggle selected state for buttons in this question card
+    const questionCard = button.closest('.question-card');
+    questionCard.querySelectorAll('.option-button').forEach(el => {
         el.classList.toggle('selected', el === button);
     });
     document.getElementById('message').textContent = '';
@@ -630,12 +616,22 @@ function submitAnswers() {
         return;
     }
 
-    fetch('{% url "evaluate" %}', {
+    // Choose endpoint based on authentication status
+    const isAuthenticated = {% if request.user.is_authenticated %}true{% else %}false{% endif %};
+    const endpoint = isAuthenticated ? '{% url "evaluate" %}' : '{% url "api_evaluate_anonymous" %}';
+
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+    
+    // Only add CSRF token for authenticated users
+    if (isAuthenticated) {
+        headers['X-CSRFToken'] = getCookie('csrftoken');
+    }
+
+    fetch(endpoint, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken'),
-        },
+        headers: headers,
         body: JSON.stringify(answers),
     })
         .then(async res => {
@@ -653,13 +649,20 @@ function submitAnswers() {
                     ${data.modules ? `<p><strong>Recommended modules:</strong> ${data.modules}</p>` : ''}
                     <p><strong>Primary risk:</strong> ${data.risks}</p>
                     <p><strong>Recommended approach:</strong> ${data.approach}</p>
+                    ${data.anonymous ? `<p style="margin-top: 16px; padding: 12px; background: #fef3c7; border-radius: 8px; color: #92400e;"><strong>Note:</strong> ${data.message}</p>` : ''}
                 </div>
             `;
-            document.getElementById('printButton').style.display = 'inline-flex';
-            const reportLink = document.getElementById('reportLink');
-            reportLink.href = `/report/${data.decision_id}/`;
-            reportLink.style.display = 'inline-flex';
-            showMessage('Recommendation saved successfully.');
+            
+            if (isAuthenticated) {
+                document.getElementById('printButton').style.display = 'inline-flex';
+                const reportLink = document.getElementById('reportLink');
+                reportLink.href = `/report/${data.decision_id}/`;
+                reportLink.style.display = 'inline-flex';
+                showMessage('Recommendation saved successfully.');
+            } else {
+                document.getElementById('printButton').style.display = 'inline-flex';
+                showMessage('Recommendation generated! Sign up to save and access advanced features.');
+            }
         })
         .catch(() => {
             showMessage('Unable to connect to the server.');
