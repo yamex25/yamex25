@@ -241,5 +241,7 @@ class SubscriptionPlan(models.Model):
     max_recommendations = models.PositiveIntegerField(default=10)
     is_active = models.BooleanField(default=True)
 
-    def __str__(self):
-        return self.name
+
+class MyAge(models.Model):
+    age = models.CharField(max_length=50, verbose_name="age")
+    description = models.TextField(max_length="400")
